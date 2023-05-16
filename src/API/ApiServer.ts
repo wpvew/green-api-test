@@ -106,12 +106,10 @@ class ApiServer {
       apiTokenInstance: string;
     },
     receiptId: number
-  ): Promise<TAxiosResponse<{ avatar: string }>> {
-    return await axios
-      .get(`${HOST}/waInstance${loginData.idInstance}/deleteNotification/${loginData.apiTokenInstance}/${receiptId}`)
-      .then(async (res) => {
-        return await this.getAvatar({ chatId: res.data.wid }, loginData);
-      });
+  ): Promise<TAxiosResponse<{ result: boolean }>> {
+    return await axios.delete(
+      `${HOST}/waInstance${loginData.idInstance}/deleteNotification/${loginData.apiTokenInstance}/${receiptId}`
+    );
   }
 }
 

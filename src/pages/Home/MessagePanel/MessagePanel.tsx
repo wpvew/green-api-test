@@ -114,7 +114,6 @@ export function MessagePanel({ chatId }: IMessagePanelProps) {
           sx={{ top: '16px', right: 0, left: 0 }}
         >
           {err && !isLoading && <Typography color='white'>{err}</Typography>}
-          {isLoading && !err && <CircularProgress size='70px' />}
         </Box>
       </Box>
 
@@ -123,6 +122,7 @@ export function MessagePanel({ chatId }: IMessagePanelProps) {
         handleChangeText={(e) => setText(e.target.value)}
         handleSubmit={handleSubmit}
         setMessage={setReceivedMessage}
+        isLoading={isLoading}
       />
     </Box>
   );

@@ -2,6 +2,7 @@ import React from 'react';
 import { List, ListItem } from '@mui/material';
 import { MessageItem } from './MessageItem';
 import { TChatHistoryData } from '../MessagePanel';
+import { generateId } from '../../../../utils/generateRandomIndex';
 
 interface IMessageListProps {
   messageData: Array<TChatHistoryData>;
@@ -21,8 +22,8 @@ export const MessageList = React.forwardRef((props: IMessageListProps, ref: Reac
       }}
     >
       <ListItem sx={{ flex: '1 1 auto' }} />
-      {messageData.map((message) => (
-        <React.Fragment key={message.idMessage}>
+      {messageData.map(generateId).map((message) => (
+        <React.Fragment key={message.id}>
           <MessageItem data={message} />
         </React.Fragment>
       ))}

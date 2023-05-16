@@ -27,9 +27,10 @@ export const fetchGreenApiByLogin = createAsyncThunk<TLoginData, TLoginData, { r
   'greenApiData/fetchByLogin',
   async (loginData, { rejectWithValue }) => {
     try {
-      await ApiServer.getStateInstance(loginData).then(({ data }) => data);
-      localStorage.setItem('idInstance', loginData.idInstance);
-      localStorage.setItem('apiTokenInstance', loginData.apiTokenInstance);
+      await ApiServer.getStateInstance(loginData).then(() => {
+        localStorage.setItem('idInstance', loginData.idInstance);
+        localStorage.setItem('apiTokenInstance', loginData.apiTokenInstance);
+      });
       return loginData;
     } catch (e) {
       throw rejectWithValue('Некорретные данные');
