@@ -1,8 +1,8 @@
 import React from 'react';
 import { List, ListItem } from '@mui/material';
 import { MessageItem } from './MessageItem';
-import { TChatHistoryData } from '../MessagePanel';
 import { generateId } from '../../../../utils/generateRandomIndex';
+import { TChatHistoryData } from '../../../../API/ApiServer';
 
 interface IMessageListProps {
   messageData: Array<TChatHistoryData>;

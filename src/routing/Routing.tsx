@@ -8,7 +8,6 @@ import { fetchGreenApiByLocal } from '../store/slice/greenApiSlice';
 export function Routing() {
   const [isMounted, setIsMointed] = useState(false);
   const idInstance = useAppSelector((state) => state.greenApiReducer.data.idInstance);
-  const isLoading = useAppSelector((state) => state.greenApiReducer.isLoading);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -16,13 +15,14 @@ export function Routing() {
       dispatch(
         fetchGreenApiByLocal({ idInstance: localStorage.idInstance, apiTokenInstance: localStorage.apiTokenInstance })
       ).then(() => setIsMointed(true));
+    } else {
+      setIsMointed(true);
     }
-    setIsMointed(true);
   }, []);
 
   return (
     <>
-      {isMounted && !isLoading && (
+      {isMounted && (
         <BrowserRouter>
           <Routes>
             <Route path='/' element={idInstance ? <Home /> : <Navigate to='/auth' replace />} />

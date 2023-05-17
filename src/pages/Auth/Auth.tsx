@@ -4,6 +4,7 @@ import { Layout } from '../../components/Layout';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { fetchGreenApiByLogin } from '../../store/slice/greenApiSlice';
 import { AuthForm, TLoginData } from './AuthForm';
+import { ErrorMsg } from '../../components/ErrorMsg/ErrorMsg';
 
 export function Auth() {
   const dispatch = useAppDispatch();
@@ -26,7 +27,7 @@ export function Auth() {
           Green-Api
         </Typography>
         <Box>
-          <Paper sx={{ p: '30px', minHeight: '360px' }}>
+          <Paper sx={{ p: '30px' }}>
             <Box position='relative'>
               <Typography component='h2' fontSize='24px' fontWeight='500'>
                 Вход
@@ -34,11 +35,7 @@ export function Auth() {
 
               <AuthForm onSubmit={handleSubmit} />
 
-              {error && (
-                <Typography position='absolute' top={0} right={0} color='red' fontSize='14px'>
-                  {error}
-                </Typography>
-              )}
+              {error && <ErrorMsg top={0} right={0} text={error} />}
             </Box>
           </Paper>
         </Box>

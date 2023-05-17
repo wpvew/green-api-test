@@ -1,22 +1,11 @@
 import React, { FormEvent, useEffect, useRef, useState } from 'react';
-import ApiServer from '../../../API/ApiServer';
-import { Box, CircularProgress, Typography } from '@mui/material';
+import ApiServer, { TChatHistoryData } from '../../../API/ApiServer';
+import { Box, Typography } from '@mui/material';
 import { assoc } from '../../../utils/assoc';
 import { InputArea } from './InputArea';
 import { Header } from './Header';
 import { MessageList } from './MessageList';
 import { useAppSelector } from '../../../store/hooks';
-
-export type TChatHistoryData = {
-  type: 'incoming' | 'outgoing';
-  idMessage: string;
-  timestamp: number;
-  typeMessage: 'textMessage' | 'extendedTextMessage' | 'quotedMessage' | 'documentMessage' | 'imageMessage';
-  textMessage: string;
-  senderId?: string;
-  senderName?: string;
-  time?: string;
-};
 
 export function makeTimeFromTimestamp(timestamp: number) {
   return new Date(+(timestamp + '000')).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -58,9 +47,9 @@ export function MessagePanel({ chatId }: IMessagePanelProps) {
       const newMessage: TChatHistoryData = {
         type: 'outgoing',
         idMessage: data.idMessage,
-        timestamp: new Date().getTime(),
         typeMessage: 'textMessage',
         textMessage: text,
+        timestamp: new Date().getTime(),
         time: makeTimeFromTimestamp(new Date().getTime()),
       };
       setChatHistoryData([...chatHistoryData, newMessage]);
@@ -111,7 +100,7 @@ export function MessagePanel({ chatId }: IMessagePanelProps) {
           display={err || isLoading ? 'flex' : 'none'}
           alignItems='center'
           justifyContent='center'
-          sx={{ top: '16px', right: 0, left: 0 }}
+          sx={{ top: '16px', right: '24px' }}
         >
           {err && !isLoading && <Typography color='white'>{err}</Typography>}
         </Box>

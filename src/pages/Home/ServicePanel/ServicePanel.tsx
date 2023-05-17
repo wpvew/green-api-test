@@ -13,7 +13,7 @@ export function ServicePanel({ removeChatId }: IServicePanelProps) {
 
   useEffect(() => {
     ApiServer.getSettings(loginData).then(({ data }) => {
-      setAvater(data.avatar);
+      setAvater(data.urlAvatar);
     });
   }, []);
 

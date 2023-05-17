@@ -9,29 +9,35 @@ import { CreateChat } from './CreateChat';
 import ApiServer from '../../API/ApiServer';
 
 export function Home() {
-  const { idInstance, apiTokenInstance } = useAppSelector((state) => state.greenApiReducer.data);
+  const loginData = useAppSelector((state) => state.greenApiReducer.data);
   const [isAuthPhone, setIsAuthPhone] = useState(true);
   const [chatPhone, setChatPhone] = useState('');
   const [chatId, setChatId] = useState('');
-  const [err, setErr] = useState('');
   const [isMounted, setIsMounted] = useState(false);
+  const [err, setErr] = useState('');
 
   useEffect(() => {
-    ApiServer.getStateInstance({ idInstance, apiTokenInstance }).then(({ data }) => {
+    ApiServer.getStateInstance(loginData).then(({ data }) => {
       if (data.stateInstance == 'notAuthorized') setIsAuthPhone(false);
       setIsMounted(true);
     });
   }, []);
 
-  const handleCheckPhone = (e: FormEvent) => {
+  const handleCheckPhone = async (e: FormEvent) => {
     e.preventDefault();
     const handlePhone = chatPhone.replace(/[\D]+/g, '');
-    if (handlePhone.length === 11) {
-      setChatId(`${handlePhone}@c.us`);
-      setChatPhone('');
-    } else {
-      setErr('Некорректный номер');
-    }
+    ApiServer.checkWhatsapp(loginData, handlePhone)
+      .then(({ data: { existsWhatsapp } }) => {
+        if (existsWhatsapp) {
+          setChatId(`${handlePhone}@c.us`);
+          setChatPhone('');
+        } else {
+          setErr('Пользователь не существует');
+        }
+      })
+      .catch(() => {
+        setErr('Телефон некорректный');
+      });
   };
   return (
     <Layout>

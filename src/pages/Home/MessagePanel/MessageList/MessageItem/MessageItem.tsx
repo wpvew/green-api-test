@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, ListItem, ListItemText, Typography } from '@mui/material';
-import { TChatHistoryData } from '../../MessagePanel';
+import { TChatHistoryData } from '../../../../../API/ApiServer';
 
 interface IMessageItemProps {
   data: TChatHistoryData;

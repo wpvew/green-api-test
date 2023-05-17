@@ -53,12 +53,7 @@ export const fetchGreenApiByLocal = createAsyncThunk<TLoginData, TLoginData, { r
 const greenApiSlice = createSlice({
   name: 'greenApiData',
   initialState,
-  reducers: {
-    updateGreenApiData(state, action) {
-      state.data.idInstance = action.payload.idInstance;
-      state.data.apiTokenInstance = action.payload.apiTokenInstance;
-    },
-  },
+  reducers: {},
   extraReducers(builder) {
     builder
       .addMatcher(isPending(fetchGreenApiByLogin, fetchGreenApiByLocal), (state) => {
@@ -76,7 +71,5 @@ const greenApiSlice = createSlice({
       });
   },
 });
-
-export const { updateGreenApiData } = greenApiSlice.actions;
 
 export default greenApiSlice.reducer;

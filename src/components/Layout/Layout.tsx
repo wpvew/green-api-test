@@ -1,5 +1,4 @@
 import React from 'react';
-import styles from './layout.scss';
 import { Box } from '@mui/material';
 
 interface ILayoutProps {

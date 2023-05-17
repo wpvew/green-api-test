@@ -17,14 +17,14 @@ export function AuthForm({ onSubmit }: IAuthFormProps) {
     apiTokenInstance: { title: 'Api Token Instance', value: '' },
   });
 
-  const handleChangeLoginData = (value: string, key: keyof typeof loginData) => {
+  const handleChangeLoginData = (value: string, key: keyof TLoginData) => {
     setLoadingData({ ...loginData, [key]: { ...loginData[key], value } });
   };
 
   return (
     <Box component='form' onSubmit={(e) => onSubmit(e, loginData)}>
       <List>
-        {(Object.keys(loginData) as Array<keyof typeof loginData>).map((key) => (
+        {(Object.keys(loginData) as Array<keyof TLoginData>).map((key) => (
           <ListItem key={key} sx={{ paddingX: 0 }}>
             <FormGroup sx={{ display: 'flex', width: 1 }}>
               <TextField

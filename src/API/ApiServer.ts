@@ -1,11 +1,10 @@
 import axios from 'axios';
-import { TChatHistoryData } from '../pages/Home/MessagePanel';
 
 const HOST = 'https://api.green-api.com';
 
 export type TAxiosResponse<T> = { data: T };
 
-export type TReceiveNotification = {
+export type TReceiveNotificationData = {
   receiptId: number;
   body: {
     typeWebhook: 'incomingMessageReceived';
@@ -23,6 +22,17 @@ export type TReceiveNotification = {
       };
     };
   };
+};
+
+export type TChatHistoryData = {
+  type: 'incoming' | 'outgoing';
+  idMessage: string;
+  timestamp: number;
+  typeMessage: 'textMessage' | 'extendedTextMessage' | 'quotedMessage' | 'documentMessage' | 'imageMessage';
+  textMessage: string;
+  senderId?: string;
+  senderName?: string;
+  time?: string;
 };
 
 class ApiServer {
@@ -59,7 +69,7 @@ class ApiServer {
   static async receiveNotification(loginData: {
     idInstance: string;
     apiTokenInstance: string;
-  }): Promise<TAxiosResponse<TReceiveNotification>> {
+  }): Promise<TAxiosResponse<TReceiveNotificationData>> {
     return await axios.get(
       `${HOST}/waInstance${loginData.idInstance}/receiveNotification/${loginData.apiTokenInstance}`
     );
@@ -85,14 +95,14 @@ class ApiServer {
   static async getAvatar(
     data: { chatId: string },
     loginData: { idInstance: string; apiTokenInstance: string }
-  ): Promise<TAxiosResponse<{ avatar: string }>> {
+  ): Promise<TAxiosResponse<{ urlAvatar: string }>> {
     return await axios.post(`${HOST}/waInstance${loginData.idInstance}/getAvatar/${loginData.apiTokenInstance}`, data);
   }
 
   static async getSettings(loginData: {
     idInstance: string;
     apiTokenInstance: string;
-  }): Promise<TAxiosResponse<{ avatar: string }>> {
+  }): Promise<TAxiosResponse<{ urlAvatar: string }>> {
     return await axios
       .get(`${HOST}/waInstance${loginData.idInstance}/getSettings/${loginData.apiTokenInstance}`)
       .then(async (res) => {
@@ -110,6 +120,18 @@ class ApiServer {
     return await axios.delete(
       `${HOST}/waInstance${loginData.idInstance}/deleteNotification/${loginData.apiTokenInstance}/${receiptId}`
     );
+  }
+
+  static async checkWhatsapp(
+    loginData: {
+      idInstance: string;
+      apiTokenInstance: string;
+    },
+    phoneNumber: string
+  ): Promise<TAxiosResponse<{ existsWhatsapp: boolean }>> {
+    return await axios.post(`${HOST}/waInstance${loginData.idInstance}/checkWhatsapp/${loginData.apiTokenInstance}/`, {
+      phoneNumber,
+    });
   }
 }
 
