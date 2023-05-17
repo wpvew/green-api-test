@@ -4,6 +4,7 @@ import { Home } from '../pages/Home';
 import { Auth } from '../pages/Auth';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { fetchGreenApiByLocal } from '../store/slice/greenApiSlice';
+import { ErrorPage } from '../pages/ErrorPage';
 
 export function Routing() {
   const [isMounted, setIsMointed] = useState(false);
@@ -27,6 +28,7 @@ export function Routing() {
           <Routes>
             <Route path='/' element={idInstance ? <Home /> : <Navigate to='/auth' replace />} />
             <Route path='/auth' element={!idInstance ? <Auth /> : <Navigate to='/' replace />} />
+            <Route path='/*' element={<ErrorPage />} />
           </Routes>
         </BrowserRouter>
       )}
