@@ -4,8 +4,9 @@ Frontend application\
 
 ## Технологии и инструменты
 - [React](https://reactjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
 - [@redux/toolkit](https://redux-toolkit.js.org/)
-- [Material UI](https://mui.com/)
+- [Material UI](https://mui.com/)a
 - [React Router](https://reactrouter.com/)
 
 ## Разработка
